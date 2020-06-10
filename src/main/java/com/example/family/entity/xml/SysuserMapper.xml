@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.family.mapper.SysuserMapper">
+  <resultMap id="BaseResultMap" type="com.example.family.entity.Sysuser">
+    <!--@mbg.generated-->
+    <!--@Table sysuser-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="kind" jdbcType="INTEGER" property="kind" />
+    <result column="persname" jdbcType="VARCHAR" property="persname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qualiy" jdbcType="VARCHAR" property="qualiy" />
+    <result column="skill" jdbcType="VARCHAR" property="skill" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="isdel" jdbcType="INTEGER" property="isdel" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, username, `password`, kind, persname, sex, birthday, phone, email, qualiy, skill, 
+    major, isdel, `status`, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sysuser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated 逻辑删除 -->
+    update sysuser set isdel=1 where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.family.entity.Sysuser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sysuser (username, `password`, kind, 
+      persname, sex, birthday, 
+      phone, email, qualiy, 
+      skill, major, isdel, 
+      `status`, remark)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{kind,jdbcType=INTEGER}, 
+      #{persname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{qualiy,jdbcType=VARCHAR}, 
+      #{skill,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.family.entity.Sysuser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sysuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="persname != null">
+        persname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qualiy != null">
+        qualiy,
+      </if>
+      <if test="skill != null">
+        skill,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="persname != null">
+        #{persname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qualiy != null">
+        #{qualiy,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null">
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.family.entity.Sysuser">
+    <!--@mbg.generated-->
+    update sysuser
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="persname != null">
+        persname = #{persname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qualiy != null">
+        qualiy = #{qualiy,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null">
+        skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.family.entity.Sysuser">
+    <!--@mbg.generated-->
+    update sysuser
+    set username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      kind = #{kind,jdbcType=INTEGER},
+      persname = #{persname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qualiy = #{qualiy,jdbcType=VARCHAR},
+      skill = #{skill,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByUsername" parameterType="com.example.family.entity.Sysuser" resultMap="BaseResultMap">
+    select * from sysuser where username = #{username,jdbcType=VARCHAR} or phone = #{username,jdbcType=VARCHAR} or email = #{email,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAllList" resultMap="BaseResultMap">
+    select * from sysuser where isdel=0 and kind!=1
+    <if test="start!=null">
+      limit ${start},${page*limit}
+    </if>
+  </select>
+
+  <select id="getCount" resultType="java.lang.Integer">
+    select count(*) from sysuser where isdel=0 and kind!=1
+  </select>
+
+  <update id="updateStatus">
+    update sysuser set status = #{status,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

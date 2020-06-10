@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.family.mapper.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.example.family.entity.Company">
+    <!--@mbg.generated-->
+    <!--@Table company-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="companyno" jdbcType="VARCHAR" property="companyno" />
+    <result column="companyname" jdbcType="VARCHAR" property="companyname" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="people" jdbcType="VARCHAR" property="people" />
+    <result column="peoplephone" jdbcType="VARCHAR" property="peoplephone" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="qualiy" jdbcType="VARCHAR" property="qualiy" />
+    <result column="money" jdbcType="VARCHAR" property="money" />
+    <result column="isdel" jdbcType="INTEGER" property="isdel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, companyno, companyname, post, `location`, people, peoplephone, `date`, `type`, 
+    qualiy, money, isdel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from company
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.family.entity.Company" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into company (companyno, companyname, post, 
+      `location`, people, peoplephone, 
+      `date`, `type`, qualiy, money, 
+      isdel)
+    values (#{companyno,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{people,jdbcType=VARCHAR}, #{peoplephone,jdbcType=VARCHAR}, 
+      #{date,jdbcType=DATE}, #{type,jdbcType=VARCHAR}, #{qualiy,jdbcType=VARCHAR}, #{money,jdbcType=VARCHAR}, 
+      0)
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.family.entity.Company" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyno != null">
+        companyno,
+      </if>
+      <if test="companyname != null">
+        companyname,
+      </if>
+      <if test="post != null">
+        post,
+      </if>
+      <if test="location != null">
+        `location`,
+      </if>
+      <if test="people != null">
+        people,
+      </if>
+      <if test="peoplephone != null">
+        peoplephone,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="qualiy != null">
+        qualiy,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyno != null">
+        #{companyno,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="people != null">
+        #{people,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplephone != null">
+        #{peoplephone,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="qualiy != null">
+        #{qualiy,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.family.entity.Company">
+    <!--@mbg.generated-->
+    update company
+    <set>
+      <if test="companyno != null">
+        companyno = #{companyno,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        companyname = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        `location` = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="people != null">
+        people = #{people,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplephone != null">
+        peoplephone = #{peoplephone,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=DATE},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="qualiy != null">
+        qualiy = #{qualiy,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.family.entity.Company">
+    <!--@mbg.generated-->
+    update company
+    set companyno = #{companyno,jdbcType=VARCHAR},
+      companyname = #{companyname,jdbcType=VARCHAR},
+      post = #{post,jdbcType=VARCHAR},
+      `location` = #{location,jdbcType=VARCHAR},
+      people = #{people,jdbcType=VARCHAR},
+      peoplephone = #{peoplephone,jdbcType=VARCHAR},
+      `date` = #{date,jdbcType=DATE},
+      `type` = #{type,jdbcType=VARCHAR},
+      qualiy = #{qualiy,jdbcType=VARCHAR},
+      money = #{money,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllList" resultMap="BaseResultMap">
+    select * from company where isdel=0
+    <if test="company.companyname !='' and company.companyname!=null" >
+      and companyname like "%"#{company.companyname,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="company.post != '' and company.post!=null">
+      and post like "%"#{company.post,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="company.qualiy != '' and company.qualiy!=null">
+      and qualiy like "%"#{company.qualiy,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="pageHelper!=null">
+      limit ${pageHelper.start},${pageHelper.page*pageHelper.limit}
+    </if>
+  </select>
+
+  <select id="getCount" resultType="java.lang.Integer">
+    select count(*) from company where isdel=0
+    <if test="companyname !='' and companyname!=null" >
+      and companyname like "%"#{companyname,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="post != '' and post!=null">
+      and post like "%"#{post,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="qualiy != '' and qualiy!=null">
+      and qualiy like "%"#{qualiy,jdbcType=VARCHAR}"%"
+    </if>
+  </select>
+
+  <select id="isExitNo" resultMap="BaseResultMap">
+    select * from company where companyno = #{companyno,jdbcType=VARCHAR}
+    <if test="id != null">
+      and id != #{id,jdbcType=INTEGER}
+    </if>
+
+  </select>
+</mapper>

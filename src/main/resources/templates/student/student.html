@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>校园招聘平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/style/admin.css}" media="all">
+</head>
+<body class="layui-layout-body">
+
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <!--<li class="layui-nav-item layui-hide-xs" lay-unselect>-->
+                <!--<input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords="> -->
+                <!--</li>-->
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+                <li class="layui-nav-item" lay-unselect style="margin-right:20px">
+                    <a href="javascript:;">
+                        欢迎，<cite id="username">贤心</cite>同学
+                    </a>
+                    <dl class="layui-nav-child">
+                        <!--<dd><a lay-href="set/user/info.html">基本资料</a></dd>-->
+                        <a style="text-align: center;" onclick="updataPassword()">修改密码</a>
+                        <!--<hr>-->
+                        <a style="text-align: center;" onclick="myMsg()">我的简历</a>
+                        <a style="text-align: center;" onclick="setPass()">设置密保</a>
+                        <dd  style="text-align: center;"><a onclick="loginOut()" target="_self">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" style="margin-right: 200px"  id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="@{sysuser/getPage}" lay-attr="@{sysuser/getPage}" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 主体内容 -->
+        <div class="layui-body" style="margin-right: 200px" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe th:src="@{company/getPage}" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>
+<input type="hidden" th:src="@{/}" id="contextpath">
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/lib/jquery-1.8.2.min.js}"></script>
+<script>
+    layui.config({
+        base: '/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use('index');
+
+</script>
+<script>
+    console.log($("#contextpath").val())
+    $.ajax({
+        url:$("#contextpath").val()+"/getLoginMsg",
+        type:'GET',
+        success:function(data){
+            if(data.success){
+                $("#username").text(data.msg)
+            }
+        }
+    })
+
+    function updataPassword(){
+        top.layui.index.openTabsPage("updataPasswordPage","修改密码")
+    }
+    //设置密保
+    function setPass(){
+        top.layui.index.openTabsPage("setpassprodect","我的密保")
+    }
+    //我的简历
+    function myMsg(){
+        top.layui.index.openTabsPage("myMsg","我的简历")
+    }
+    function loginOut(){
+        layer.confirm('确定退出吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            window.location = "/"
+        }, function(){
+
+        });
+    }
+
+</script>
+</body>
+</html>
+
+

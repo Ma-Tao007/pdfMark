@@ -1,0 +1,162 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>steps 演示</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layui/steps/style.css}">
+
+</head>
+<style>
+    .one{
+        margin: 100px 572px;
+        width: 20%;
+        text-align: center;
+    }
+</style>
+<body style="padding: 20px">
+<div id="step_demo" class="step-body">
+    <div class="step-header" style="width:80%;overflow: hidden;">
+        <ul>
+            <li>
+                <span class="step-name">输入用户名</span>
+            </li>
+            <li>
+                <span class="step-name">填写密保信息</span>
+            </li>
+            <li>
+                <span class="step-name">填写新密码</span>
+            </li>
+            <li>
+                <span class="step-name">完成</span>
+            </li>
+        </ul>
+    </div>
+    <div class="step-content">
+        <div class="step-list">
+            <form class="layui-form one" th:action="@{/company/updata}" lay-filter="component-form-group" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="username" lay-verify="required" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                    </div>
+                </div>
+                <button class="layui-btn" btn_data="username" type="button" lay-filter="component-form-demo1">提交</button>
+            </form>
+        </div>
+        <div class="step-list">
+           <form class="layui-form one" th:action="@{/company/updata}" lay-filter="component-form-group" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密保问题</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="question" readonly lay-verify="required" autocomplete="off"  class="layui-input">
+                    </div>
+                    <label class="layui-form-label">答案</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="answer" lay-verify="required" autocomplete="off" placeholder="请输入答案" class="layui-input">
+                    </div>
+                </div>
+                <button class="layui-btn" btn_data="question" type="button"  lay-filter="component-form-demo1">提交</button>
+            </form>
+        </div>
+        <div class="step-list">
+            <form class="layui-form one" th:action="@{/company/updata}" lay-filter="component-form-group" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入新密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" id="newPassword" lay-verify="required" autocomplete="off" placeholder="请输入密码" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" id="tonewPassword" lay-verify="required" autocomplete="off" placeholder="请再次输入" class="layui-input">
+                    </div>
+                </div>
+                <button class="layui-btn" btn_data="newPassword" type="button"  lay-filter="component-form-demo1">提交</button>
+            </form>
+        </div>
+        <div class="step-list">完成</div>
+    </div>
+
+</div>
+
+<!--<button id="preBtn">上一步</button>-->
+<!--<button id="nextBtn">下一步</button>-->
+<!--<button id="goBtn">跳转的指定的步骤</button>-->
+</body>
+<input type="hidden" th:src="@{/}" id="contextPath">
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/layerConfig.js}"></script>
+<script th:src="@{/layui/config.js}"></script>
+<script th:src="@{/lib/jquery-1.8.2.min.js}"></script>
+<script>
+    /*
+ steps组件
+ */
+    var passAnswer = ""
+
+    layui.use(['jquery', 'steps','layer'], function(){
+
+        var $ = layui.$;
+        var layer = layui.layer;
+        var $step= $("#step_demo").step();
+
+        $(".layui-btn").click(function(){
+            var type = $(this).attr("btn_data")
+            if(type=="username"){
+                if($("#username").val()==''){
+                    layer.msg("请输入用户名")
+                }else{
+                    $.ajax({
+                        url:$("#contextPath").val()+"/sysuser/getUserByUsername",
+                        type:'post',
+                        data:{username:$("#username").val()},
+                        success:function(data){
+                            if(data.success){
+                                $("#question").val(data.data.question)
+                                passAnswer = data.data.answer
+                                $step.nextStep();
+                            }else{
+                                layer.msg(data.msg,{icon:2})
+                            }
+                        }
+                    })
+                }
+            }else if(type=="question"){
+                if($("#answer").val()==''){
+                    layer.msg("请输入答案")
+                }else{
+                    if(passAnswer!=$("#answer").val()){
+                        layer.msg("回答错误",{icon:2})
+                    }else{
+                        $step.nextStep();
+                    }
+                }
+            }else if(type=='newPassword'){
+                if($("#newPassword").val()=='' || $("#tonewPassword").val()==''){
+                    layer.msg("请输入密码")
+                }else{
+                    if($("#newPassword").val()!=$("#tonewPassword").val()){
+                        layer.msg("二次密码不一致",{icon:2})
+                    }else{
+                        $.ajax({
+                            url:$("#contextPath").val()+"/sysuser/updatePass",
+                            type:'post',
+                            data:{username:$("#username").val(),password:$("#newPassword").val()},
+                            success:function(data){
+                                setTips(true,"密码重置成功",function(){
+                                    window.location = "/"
+                                },800)
+                            }
+                        })
+                    }
+                }
+            }
+        })
+
+
+
+    });
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home</title>
+    <!-- Meta-Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <script type="text/javascript" th:src="@{/lib/jquery-1.8.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- //Meta-Tags -->
+    <!-- Stylesheets -->
+    <link th:href="@{/style/index.css}" rel='stylesheet' type='text/css' />
+    <!--// Stylesheets -->
+</head>
+
+<body>
+<h1>Family Login Form</h1>
+<div class="w3ls-login box">
+    <img th:src="@{/logo.png}" alt="logo_img" />
+    <!-- form starts here -->
+    <form>
+        <div class="agile-field-txt">
+            <input type="text" name="username" id="username" placeholder="Your email" />
+        </div>
+        <div class="agile-field-txt">
+            <input type="password" name="password" id="password" placeholder="password" required="" />
+            <div class="agile_label">
+                <input id="check3" name="check3" type="checkbox" value="show password">
+                <label class="check" for="check3">Remember me</label>
+            </div>
+        </div>
+        <div class="w3ls-bot">
+            <input type="button" onclick="login()" value="LOGIN">
+        </div>
+    </form>
+</div>
+<!-- //form ends here -->
+<!--copyright-->
+<div class="copy-wthree">
+    <p>Copyright &copy; 2020.Company name All rights reserved.</p>
+</div>
+<input hidden th:src="@{/}" id="contextPath">
+<!--//copyright-->
+</body>
+<script type="text/javascript" th:src="@{/layerConfig.js}"></script>
+</html>
+
+<script>
+    var contextPath = $("#contextPath").attr("src")
+    //頁面回车事件
+    document.onkeyup = function (e) {
+        if (window.event)//如果window.event对象存在，就以此事件对象为准
+            e = window.event;
+        var code = e.charCode || e.keyCode;
+        if (code == 13) {
+            //此处编写用户敲回车后的代码
+            login()
+        }
+    }
+    function login(){
+        $.ajax({
+            url:contextPath+"login/main",
+            method:'post',
+            data:{'username':$("#username").val(),'password':$("#password").val()},
+            success:function(res){
+                if(res.success){
+                    //登陆成功，跳转登陆成功页面
+                    // layer.msg('验证成功',{icon:1},function(){
+                    //     window.location.href = "index"
+                    // })
+                    setTips(true,"验证成功",function(){
+                        window.location.href = "index"
+                    },800)
+
+                }else{
+                   layer.msg(res.msg,{icon:2})
+                }
+            },
+            error:function (err) {
+                console.log(err)
+            }
+        })
+    }
+</script>
