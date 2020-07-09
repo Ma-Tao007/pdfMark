@@ -117,11 +117,11 @@
     </div>
 </div>
 
-<input type="hidden" th:src="@{/}" id="contextPath">
+<input type="hidden" th:src="${#httpServletRequest.getContextPath()}" id="contextPath">
 <script th:src="@{/layui/layui.js}"></script>
 <script th:src="@{/lib/jquery-1.8.2.min.js}"></script>
 <script>
-    var defaulevalue = "请上传pdf文件，doc/docx将会被转为pdf"
+    var defaulevalue = "请上传pdf文件（目前只支持pdf文件）"
     $("#loadfilename").val(defaulevalue)
     layui.config({
         base: '/' //静态资源所在路径
@@ -171,7 +171,7 @@
                 success:function(data){
                     if(data.success){
                         //提交成功，提交列表页面，并删除当前页面
-                        layer.msg("保存成功",{icon:1,time:1000}, function(){
+                        layer.msg(data.msg,{icon:1,time:1000}, function(){
                             parent.layui.admin.events.closeThisTabs()
                         });
                     }else{
@@ -194,11 +194,18 @@
             ,bindAction: '#loadAction' //指向一个按钮触发上传
             ,done: function(res){
                 console.log(res)
-                layer.closeAll();
-                layer.msg("上传成功",{icon:1,time:1000})
+                if(!res.success){
+                    //上传有问题
+                    layer.closeAll();
+                    layer.msg(res.msg,{icon:2,time:1000})
+                }else{
+                    layer.closeAll();
+                    layer.msg(res.msg,{icon:1,time:1000})
+                }
+
             }
             ,accept: 'file' //允许上传的文件类型
-            ,exts:'doc|docx|pdf'//配合accept使用
+            ,exts:'pdf'//配合accept使用
             ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
                 layer.msg('上传中...', {
                     icon:16,

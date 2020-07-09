@@ -121,11 +121,13 @@ public class CompanyController {
                 fileParent.mkdirs();
             }
             dest.createNewFile();
-            LOGGER.info(dest.getName()+"上传成功");
+            //文件内容写入
+            file.transferTo(dest);
+            LOGGER.info(filePath+dest.getName()+"上传成功");
             return JsonWrite.SUCCESS("上传成功");
         } catch (IOException e) {
             LOGGER.error("上传文件出现异常,异常信息：",e);
         }
-        return  JsonWrite.ERROR("上传失败！");
+        return  JsonWrite.ERROR("上传失败");
     }
 }

@@ -35,4 +35,7 @@ logging:
 
 #配置文件上传路径
 ws:
-  pdfloadPath: C:\release\sites\upload\pdf\template\
+  pdfloadPath: D:\apache-tomcat-7.0.103\webapps\pdf\
+
+server:
+  port: 8081
